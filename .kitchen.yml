@@ -11,5 +11,5 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[ros::install_test]
+      - recipe[ros_test::install_indigo]
     attributes:
