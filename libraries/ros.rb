@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ros
-# Library:: ros_install
+# Library:: ros
 #
 # Copyright (C) 2015 Ryan Hass
 #
@@ -35,16 +35,17 @@ class Chef
     include Chef::DSL::Recipe
 
     def action_install
-      converge_by("installing #{ros_package}") do
+      converge_by("installing #{ros_release}") do
         notifying_block do
           install_repository
           install_package
+          initialize_rosdep
         end
       end
     end
 
     def action_upgrade
-      converge_by("upgrading #{ros_package}") do
+      converge_by("upgrading #{ros_release}") do
         notifying_block do
           install_repository
           upgrade_package
@@ -53,7 +54,7 @@ class Chef
     end
 
     def action_remove
-      converge_by("removing #{ros_package}") do
+      converge_by("removing #{ros_release}") do
         notifying_block do
           install_repository
           remove_package
@@ -63,8 +64,8 @@ class Chef
 
     private
 
-    def ros_package
-      @ros_package = "ros-#{new_resource.version}-#{new_resource.config}"
+    def ros_release
+      @ros_release = "ros-#{new_resource.version}-#{new_resource.config}"
     end
 
     def install_repository
@@ -94,22 +95,32 @@ class Chef
         components new_resource.apt_components
         key new_resource.apt_key
       end
+
+      # Ensure local repo cache is up to date for ROS dependencies.
+      include_recipe 'apt::default'
+    end
+
+    def initialize_rosdep
+      execute 'rosdep-init' do
+        command 'sudo rosdep init'
+        not_if { ::File.exists?('/etc/ros/rosdep/sources.list.d/20-default.list') }
+      end
     end
 
     def install_package
-      package ros_package do
+      package ros_release do
         action :install
       end
     end
 
     def upgrade_package
-      package ros_package do
+      package ros_release do
         action :upgrade
       end
     end
 
     def remove_package
-      package ros_package do
+      package ros_release do
         action :remove
       end
     end
