@@ -22,11 +22,12 @@ class Chef
     include Poise
     actions(:install, :upgrade, :remove)
 
-    attribute(:version, kind_of: String, name_attribute: true)
+    attribute(:release, kind_of: String, name_attribute: true)
     attribute(:config, kind_of: String, :equal_to => ['desktop-full', 'desktop', 'ros-base'], default: 'ros-base')
     attribute(:apt_uri, kind_of: String, default: 'http://packages.ros.org/ros/ubuntu')
     attribute(:apt_components, kind_of: Array, default: ['main'])
     attribute(:apt_key, kind_of: String, default: 'https://raw.githubusercontent.com/ros/rosdistro/master/ros.key')
+    attribute(:sys_profile, kind_of: [TrueClass, FalseClass], default: true)
   end
 
   class Provider::Ros < Provider
@@ -65,7 +66,7 @@ class Chef
     private
 
     def ros_release
-      @ros_release = "ros-#{new_resource.version}-#{new_resource.config}"
+      @ros_release = "ros-#{new_resource.release}-#{new_resource.config}"
     end
 
     def install_repository
@@ -85,7 +86,7 @@ class Chef
     def install_apt_repository
       codename = if node['lsb']['codename']
         node['lsb']['codename']
-      elsif node['platform'] == 'debian' && node['platform_version'].start_with?('6.')
+      elsif node['platform'] == 'debian' && node['platform_release'].start_with?('6.')
         # Debian 6 doesn't install /etc/lsb-release by default so ohai has no data for it
         'squeeze'
       end
@@ -107,10 +108,19 @@ class Chef
       end
     end
 
+    def sys_profile(cmd)
+      link "/etc/profile.d/#{new_resource.release}.sh" do
+        to "/opt/ros/#{new_resource.release}/setup.sh"
+        action cmd
+      end
+    end
+
     def install_package
       package ros_release do
         action :install
       end
+
+      sys_profile(:create)
     end
 
     def upgrade_package
@@ -123,6 +133,8 @@ class Chef
       package ros_release do
         action :remove
       end
+
+      sys_profile(:delete)
     end
 
   end
