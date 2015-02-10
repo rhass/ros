@@ -9,7 +9,7 @@ platforms:
   - name: ubuntu-14.04
 
 suites:
-  - name: default
+  - name: ros_indigo
     run_list:
       - recipe[ros_test::install_indigo]
     attributes:
