@@ -8,13 +8,11 @@ This cookbook installs ROS.
 
 ## Usage
 
-### ros::default
-
 Include `ros` in your cookbooks metadata file, and make use of the ros provider:
 
 ```ruby
 ros 'indigo' do
-  action: [:install, :upgrade]
+  action [:install, :upgrade]
 end
 ```
 
