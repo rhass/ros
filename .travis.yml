@@ -1,0 +1,16 @@
+sudo: false
+cache: bundler
+language: ruby
+rvm:
+- 2.1.4
+env:
+  global:
+  - secure: M8eS3RqRRGCRudyoG2nMfVgKkqHP6bSrEbyPccpu3xFLvQnxLgPmiToSxYHPGvN8mtH7eKwQf/nfKneHQLU0AXWGZWnXb7RUZ/0+zo2Oj4XlCS+CIsWLN92kVCnGwcJJFTni5kaM72XJ1c+o69zfLjHefXD0yb9gl1Rb7JDXXKc=
+  - DIGITALOCEAN_SSH_KEY_IDS="689870"
+before_install:
+- openssl aes-256-cbc -K $encrypted_a17b55e0d87d_key -iv $encrypted_a17b55e0d87d_iv
+  -in test/integration/travis_ssh_key.enc -out ~/.ssh/id_rsa -d
+bundler_args: "--deployment --binstubs"
+script:
+- "./bin/foodcritic ."
+- "./bin/kitchen test -d always -c 2"
