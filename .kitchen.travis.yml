@@ -3,10 +3,6 @@ driver:
   name: digitalocean
 
 platforms:
-  - name: ubuntu-12-04-x64
-    driver_config:
-      region: sfo1
-      private_networking: false
   - name: ubuntu-14-04-x64
     driver_config:
       region: sfo1
