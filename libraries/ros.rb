@@ -2,7 +2,12 @@
 # Cookbook Name:: ros
 # Library:: ros
 #
-# Copyright (C) 2015 Ryan Hass
+# Copyright 2013, Noah Kantrowitz
+# Copyright (C) 2015, Ryan Hass
+#
+# Portions of this code were sourced from the poise-ruby project, written
+# by Noah Kantrowitz. 
+# https://github.com/poise/poise-ruby
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +20,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+# 
+
 class Chef
 
   class Resource::Ros < Resource
