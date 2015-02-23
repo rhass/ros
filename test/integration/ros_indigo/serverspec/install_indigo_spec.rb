@@ -16,5 +16,10 @@ describe 'install_indigo' do
     expect(file('/etc/apt/sources.list.d/ros.list')).to contain(/http:\/\/packages.ros.org\/ros\/ubuntu/)
     expect(repo_policy.stdout).to match(/http:\/\/packages.ros.org\/ros\/ubuntu/)
   end
+
+  it 'sets the value of LC_ALL to "C"' do
+    expect(file('/etc/default/locale')).to be_file
+    expect(file('/etc/default/locale')).to contain(/LC_ALL=C/)
+  end
 end
 
