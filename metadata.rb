@@ -10,3 +10,4 @@ supports 'ubuntu'
 
 depends 'apt', '>= 2.6.1'
 depends 'poise'
+depends 'locale'
