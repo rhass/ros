@@ -15,3 +15,5 @@ bundler_args: "--binstubs"
 script:
 - "./bin/foodcritic ."
 - "./bin/kitchen test -d always -c 2"
+after_script:
+- rm ~/.ssh/id_rsa
