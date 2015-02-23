@@ -108,6 +108,8 @@ class Chef
     end
 
     def initialize_rosdep
+      include_recipe 'locale::default'
+
       execute 'rosdep-init' do
         command 'sudo rosdep init'
         not_if { ::File.exists?('/etc/ros/rosdep/sources.list.d/20-default.list') }
