@@ -13,3 +13,7 @@ suites:
     run_list:
       - recipe[ros_test::install_indigo]
     attributes:
+  - name: ros_indigo_no_sysprofile
+    run_list:
+      - recipe[ros_test::install_indigo_no_sysprofile]
+    attributes:
