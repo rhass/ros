@@ -29,12 +29,7 @@ class Chef
     attribute(:workspace, kind_of: String, name_attribute: true)
     attribute(:workspace_src_dir, kind_of: String, default: lazy { ::File.join(self.workspace, 'src') })
     attribute(:ros_path, kind_of: String, default: lazy { ::File.join('/opt/ros', self.release) })
-    attribute(:ros_env, kind_of: Hash, default: lazy { self.get_env_from_file('/opt/ros/indigo/setup.sh') })
-
-    # self.workspace is being set to the catkin workspace, and not the path to the ROS installation.
-    def env(arg=nil)
-      set_or_return(:env, arg, kind_of: Hash, default: self.get_env_from_file('/opt/ros/indigo/setup.sh'))
-    end
+    attribute(:ros_env, kind_of: Hash, default: lazy { self.get_env_from_file(::File.join(self.ros_path, 'setup.sh')) })
 
     # Source a given file, and compare environment before and after.
     # @returns [Hash] keys that have changed.
