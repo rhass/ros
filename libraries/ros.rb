@@ -117,7 +117,10 @@ class Chef
     end
 
     def sys_profile_manage(cmd)
-      link "/etc/profile.d/#{new_resource.release}.sh" do
+      profile = "/etc/profile.d/#{new_resource.release}.sh"
+      node.default['ros']["#{new_resource.release}"]['sys_profile'] = profile
+
+      link profile do
         to "/opt/ros/#{new_resource.release}/setup.sh"
         action cmd
       end
@@ -145,7 +148,7 @@ class Chef
       package ros_release do
         action :remove
       end
-      
+
       sys_profile_manage(:delete)
     end
 
