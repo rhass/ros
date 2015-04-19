@@ -42,9 +42,8 @@ class Chef
     # Read in the bash environment, after an optional command.
     # @returns [Array] of key/value pairs.
     def bash_env(cmd=nil)
-      printenv_cmd = "#{cmd} ; printenv"
-      env_file = Mixlib::ShellOut.new(printenv_cmd)
-      env_file.stdout.split(/\n/).map { |l| l.split(/=/) }
+      env_file = `#{cmd} ; printenv`
+      env_file.split(/\n/).map { |l| l.split(/=/) }
     end
   end
 
@@ -76,14 +75,11 @@ class Chef
     end
 
     def initialize_workspace
-      log "ros_env: #{new_resource.ros_env}"
-
       execute 'catkin_init' do
         command 'catkin_init_workspace'
         environment new_resource.ros_env
         cwd new_resource.workspace_src_dir
         user new_resource.user
-        action :nothing
       end
     end
 
