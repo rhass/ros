@@ -17,3 +17,4 @@
 # limitations under the License.
 #
 
+catkin_package 'https://github.com/rohbotics/xv_11_laser_driver.git'
