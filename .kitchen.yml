@@ -18,3 +18,8 @@ suites:
     run_list:
       - recipe[ros_test::install_indigo_no_sysprofile]
     attributes:
+  - name: ros_jade
+    run_list:
+      - recipe[ros_test::install_jade]
+      - recipe[ros_test::catkin_package]
+    attributes:
