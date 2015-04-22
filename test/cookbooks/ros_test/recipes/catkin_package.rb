@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 
-catkin_package 'xv_11_laser_driver' do
-  source_uri 'https://github.com/rohbotics/xv_11_laser_driver.git'
-  revision 'indigo-devel'
+catkin_package 'roslint' do
+  source_uri 'https://github.com/ros/roslint'
 end
