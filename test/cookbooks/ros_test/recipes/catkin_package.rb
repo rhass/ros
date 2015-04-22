@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ros_test
-# Library:: default
+# Recipe:: catkin_package
 #
 # Copyright (C) 2015 Ryan Hass
 #
@@ -17,4 +17,7 @@
 # limitations under the License.
 #
 
-catkin_package 'https://github.com/rohbotics/xv_11_laser_driver.git'
+catkin_package 'xv_11_laser_driver' do
+  source_uri 'https://github.com/rohbotics/xv_11_laser_driver.git'
+  revision 'indigo-devel'
+end

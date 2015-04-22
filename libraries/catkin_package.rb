@@ -18,24 +18,24 @@
 #
 
 class Chef
-  class Resource::Package::Catkin < Chef::Resource::Package
+  class Resource::CatkinPackage < Resource
     include Poise(parent: Catkin)
 
     attribute(:source_uri, kind_of: String, required: true)
     attribute(:revision, kind_of: String, default: 'master')
 
-    def initialize(name, run_context=nil)
-      super
-      @provider = Chef::Provider::Package::Catkin
-      @allowed_actions.push(:install, :update, :remove)
-    end
+    actions(:install, :update, :remove)
   end
 
-  class Provider::Package::Catkin < Chef::Provider::Package
+  class Provider::CatkinPackage < Provider
     include Poise
 
     def action_install
       install_git
+      source_package
+    end
+
+    def action_upgrade
       source_package
     end
 
@@ -46,7 +46,7 @@ class Chef
     private
 
     def install_git
-      if platform_family('debian')
+      if node['platform_family'] == 'debian'
         package 'git-core'
       else
         package 'git'
@@ -66,8 +66,7 @@ class Chef
           end
 
           execute "cmake-#{new_resource.name}" do
-            command  "catkin_make"
-            path new_resource.parent.workspace
+            command  "catkin_make --directory #{new_resource.parent.workspace}"
             user new_resource.parent.user
             env new_resource.parent.ros_env
             action :nothing
