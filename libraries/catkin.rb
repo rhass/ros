@@ -79,6 +79,7 @@ class Chef
         environment new_resource.ros_env
         cwd new_resource.workspace_src_dir
         user new_resource.user
+        creates ::File.join(new_resource.workspace_src_dir, 'CMakeLists.txt')
       end
     end
 
