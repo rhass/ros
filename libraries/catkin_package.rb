@@ -31,7 +31,6 @@ class Chef
     include Poise
 
     def action_install
-      install_git
       source_package
     end
 
@@ -56,6 +55,8 @@ class Chef
     def source_package
       converge_by("syncing package source for #{new_resource.name}") do
         notifying_block do
+          install_git
+
           git ::File.join(new_resource.parent.workspace_src_dir, new_resource.name) do
             repository new_resource.source_uri
             revision new_resource.revision
