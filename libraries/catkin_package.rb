@@ -24,7 +24,7 @@ class Chef
     attribute(:source_uri, kind_of: String, required: true)
     attribute(:revision, kind_of: String, default: 'master')
 
-    actions(:install, :update, :remove)
+    actions(:install)
   end
 
   class Provider::CatkinPackage < Provider
@@ -32,14 +32,6 @@ class Chef
 
     def action_install
       source_package
-    end
-
-    def action_upgrade
-      source_package
-    end
-
-    def action_remove
-      remove_workspace
     end
 
     private

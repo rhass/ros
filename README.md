@@ -14,9 +14,18 @@ This cookbook installs ROS.
 
 Include `ros` in your cookbooks metadata file, and make use of the ros provider:
 
+### Installing ROS
 ```ruby
 ros 'indigo' do
+  config 'ros-desktop'
   action [:install, :upgrade]
+end
+```
+
+### Installing a Catkin Package
+``` ruby
+catkin_package 'roslint' do
+  source_uri 'https://github.com/ros/roslint'
 end
 ```
 
