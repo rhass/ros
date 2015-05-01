@@ -41,7 +41,12 @@ class Chef
     # Read in the bash environment, after an optional command.
     # @returns [Array] of key/value pairs.
     def bash_env(cmd=nil)
-      env_file = `#{cmd} ; printenv`
+      if cmd.nil?
+        env_file = `printenv`
+      else
+        env_file = `"#{cmd}" ; printenv`
+      end
+
       env_file.split(/\n/).map { |l| l.split(/=/) }
     end
   end
