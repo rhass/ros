@@ -28,27 +28,6 @@ class Chef
     attribute(:workspace, kind_of: String, name_attribute: true)
     attribute(:workspace_src_dir, kind_of: String, default: lazy { ::File.join(self.workspace, 'src') })
     attribute(:ros_path, kind_of: String, default: lazy { ::File.join('/opt/ros', self.release) })
-    attribute(:ros_env, kind_of: Hash, default: lazy { self.get_env_from_file(::File.join(self.ros_path, 'setup.sh')) })
-
-    # Source a given file, and compare environment before and after.
-    # @returns [Hash] keys that have changed.
-    def get_env_from_file(file)
-      Hash[ bash_env(". #{::File.realpath file}") - bash_env() ]
-    end
-
-    protected
-
-    # Read in the bash environment, after an optional command.
-    # @returns [Array] of key/value pairs.
-    def bash_env(cmd=nil)
-      if cmd.nil?
-        env_file = `printenv`
-      else
-        env_file = `"#{cmd}" ; printenv`
-      end
-
-      env_file.split(/\n/).map { |l| l.split(/=/) }
-    end
   end
 
   class Provider::Catkin < Provider
@@ -80,8 +59,7 @@ class Chef
 
     def initialize_workspace
       execute 'catkin_init' do
-        command 'catkin_init_workspace'
-        environment new_resource.ros_env
+        command "#{new_resource.ros_path}/env.sh catkin_init_workspace"
         cwd new_resource.workspace_src_dir
         user new_resource.user
         creates ::File.join(new_resource.workspace_src_dir, 'CMakeLists.txt')

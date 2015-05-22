@@ -59,9 +59,8 @@ class Chef
           end
 
           execute "cmake-#{new_resource.name}" do
-            command  "catkin_make --directory #{new_resource.parent.workspace}"
+            command  "#{new_resource.parent.ros_path}/env.sh catkin_make --directory #{new_resource.parent.workspace}"
             user new_resource.parent.user
-            env new_resource.parent.ros_env
             action :nothing
           end
         end
