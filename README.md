@@ -29,6 +29,14 @@ catkin_package 'roslint' do
 end
 ```
 
+## Sponsors
+Hosting sponsorship is provided by DigitalOcean and your support.
+By signing up with the following reference code you are contributing
+$25 in hosting time to this project, while getting yourself $10 in
+credit. We appreciate your support!
+
+https://www.digitalocean.com/?refcode=775b6507a7eb
+
 ## License and Authors
 
 Author:: Ryan Hass (<ryan@invalidchecksum.net>)
