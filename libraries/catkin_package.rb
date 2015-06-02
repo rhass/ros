@@ -17,6 +17,10 @@
 # limitations under the License.
 #
 
+require 'poise'
+require 'chef/resource'
+require 'chef/provider'
+
 class Chef
   class Resource::CatkinPackage < Resource
     include Poise(parent: Catkin)
