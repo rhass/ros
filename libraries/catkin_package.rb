@@ -76,7 +76,7 @@ module CatkinPackage
     def remove_workspace
       directory ::File.join(new_resource.parent.workspace_src_dir, new_resource.name) do
         recursive true
-        action :remove
+        action :delete
       end
     end
   end

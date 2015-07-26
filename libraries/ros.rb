@@ -121,7 +121,7 @@ module Ros
 
     def sys_profile_manage(cmd)
       profile = "/etc/profile.d/#{new_resource.release}.sh"
-      node.default['ros']["#{new_resource.release}"]['sys_profile'] = profile
+      node.default['ros'][new_resource.release]['sys_profile'] = profile
 
       link profile do
         to "/opt/ros/#{new_resource.release}/setup.sh"
@@ -130,7 +130,7 @@ module Ros
     end
 
     def install_package
-      package ros_release do
+      package ros_release do # ~FC005
         action :install
       end
 
