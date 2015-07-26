@@ -21,10 +21,10 @@ require 'poise'
 require 'chef/resource'
 require 'chef/provider'
 
-class Chef
-  class Resource::Catkin < Resource
+module Catkin
+  class Resource < Chef::Resource
     include Poise(container: true)
-
+    provides(:catkin)
     actions(:create, :remove)
 
     attribute(:user, kind_of: String, default: lazy { node['current_user'] })
@@ -34,8 +34,9 @@ class Chef
     attribute(:ros_path, kind_of: String, default: lazy { ::File.join('/opt/ros', self.release) })
   end
 
-  class Provider::Catkin < Provider
+  class Provider < Chef::Provider
     include Poise
+    provides(:catkin)
 
     def action_create
       install_build_essential

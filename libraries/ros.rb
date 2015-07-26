@@ -26,10 +26,10 @@ require 'poise'
 require 'chef/resource'
 require 'chef/provider'
 
-class Chef
-
-  class Resource::Ros < Resource
+module Ros
+  class Resource < Chef::Resource
     include Poise
+    provides(:ros)
     actions(:install, :upgrade, :remove)
 
     attribute(:release, kind_of: String, name_attribute: true)
@@ -40,10 +40,9 @@ class Chef
     attribute(:sys_profile, kind_of: [TrueClass, FalseClass], default: true)
   end
 
-  class Provider::Ros < Provider
+  class Provider < Chef::Provider
     include Poise
-    # Work-around for poise issue #8
-    include Chef::DSL::Recipe
+    provides(:ros)
 
     def action_install
       converge_by("installing #{ros_release}") do

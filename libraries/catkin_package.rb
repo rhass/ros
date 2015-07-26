@@ -21,9 +21,10 @@ require 'poise'
 require 'chef/resource'
 require 'chef/provider'
 
-class Chef
-  class Resource::CatkinPackage < Resource
-    include Poise(parent: Catkin)
+module CatkinPackage
+  class Resource < Chef::Resource
+    include Poise(parent: :catkin)
+    provides(:catkin_package)
 
     attribute(:source_uri, kind_of: String, required: true)
     attribute(:revision, kind_of: String, default: 'master')
@@ -31,8 +32,9 @@ class Chef
     actions(:install)
   end
 
-  class Provider::CatkinPackage < Provider
+  class Provider < Chef::Provider
     include Poise
+    provides(:catkin_package)
 
     def action_install
       source_package
