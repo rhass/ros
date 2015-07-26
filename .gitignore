@@ -16,5 +16,7 @@ Gemfile.lock
 bin/*
 .bundle/*
 
+# Chef
+.chef
 .kitchen/
 .kitchen.local.yml
