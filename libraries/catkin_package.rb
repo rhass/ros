@@ -27,7 +27,7 @@ module CatkinPackage
     provides(:catkin_package)
 
     attribute(:source_uri, kind_of: String, required: true)
-    attribute(:revision, kind_of: String, default: 'master')
+    attribute(:revision, kind_of: String, default: lazy { "#{parent.release}-devel" })
 
     actions(:install)
   end

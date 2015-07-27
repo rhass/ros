@@ -19,4 +19,5 @@
 
 catkin_package 'roslint' do
   source_uri 'https://github.com/ros/roslint'
+  revision 'master'
 end
