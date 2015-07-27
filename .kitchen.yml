@@ -13,6 +13,7 @@ suites:
     run_list:
       - recipe[ros_test::install_indigo]
       - recipe[ros_test::catkin_package]
+      - recipe[ros_test::gazebo]
     attributes:
   - name: ros_indigo_no_sysprofile
     run_list:

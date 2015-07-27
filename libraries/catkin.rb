@@ -32,6 +32,7 @@ module Catkin
     attribute(:workspace, kind_of: String, name_attribute: true)
     attribute(:workspace_src_dir, kind_of: String, default: lazy { ::File.join(self.workspace, 'src') })
     attribute(:ros_path, kind_of: String, default: lazy { ::File.join('/opt/ros', self.release) })
+    attribute(:ros_cmd, kind_of: String, default: lazy { ::File.join(self.ros_path, 'env.sh') })
   end
 
   class Provider < Chef::Provider
@@ -64,7 +65,7 @@ module Catkin
 
     def initialize_workspace
       execute 'catkin_init' do
-        command "#{new_resource.ros_path}/env.sh catkin_init_workspace"
+        command "#{new_resource.ros_cmd} catkin_init_workspace"
         cwd new_resource.workspace_src_dir
         user new_resource.user
         creates ::File.join(new_resource.workspace_src_dir, 'CMakeLists.txt')
