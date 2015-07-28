@@ -32,7 +32,7 @@ module Catkin
     attribute(:workspace, kind_of: String, name_attribute: true)
     attribute(:workspace_src_dir, kind_of: String, default: lazy { ::File.join(self.workspace, 'src') })
     attribute(:ros_path, kind_of: String, default: lazy { ::File.join('/opt/ros', self.release) })
-    attribute(:ros_cmd, kind_of: String, default: lazy { ::File.join(self.ros_path, 'env.sh') })
+    attribute(:ros_cmd, kind_of: String, default: lazy { ::File.exists?(::File.join(self.workspace, 'devel', 'env.sh')) ? ::File.join(self.workspace, 'devel', 'env.sh') : ::File.join(self.ros_path, 'env.sh') })
   end
 
   class Provider < Chef::Provider

@@ -20,6 +20,7 @@
 require 'poise'
 require 'chef/resource'
 require 'chef/provider'
+require 'mixlib/shellout'
 
 module CatkinPackage
   class Resource < Chef::Resource
@@ -40,7 +41,17 @@ module CatkinPackage
       source_package
     end
 
+    def package_installed?(pkg)
+      installed_ros_packages.has_key?(pkg).to_s
+    end
+
     private
+
+    def installed_ros_packages
+      packages = Mixlib::ShellOut.new("#{new_resource.parent.ros_cmd} rospack list")
+      packages.run_command
+      Hash[*packages.stdout.split(" ")]
+    end
 
     def install_git
       if node['platform_family'] == 'debian'
@@ -64,8 +75,17 @@ module CatkinPackage
             notifies :run, "execute[cmake-#{new_resource.name}]"
           end
 
+          # This is a weird noop hack to allow me to execute catkin_make if a
+          # package is not installed presumably due to a previous attempt having
+          # failed. There probably is a much better way to do this idempotently.
+          execute "check-if-package-is-installed" do
+            command ":"
+            notifies :run, "execute[cmake-#{new_resource.name}]"
+            not_if package_installed?(new_resource.name)
+          end
+
           execute "cmake-#{new_resource.name}" do
-            command  "#{new_resource.parent.ros_path}/env.sh catkin_make --directory #{new_resource.parent.workspace}"
+            command  "#{new_resource.parent.ros_cmd} catkin_make install --directory #{new_resource.parent.workspace}"
             user new_resource.parent.user
             action :nothing
           end
