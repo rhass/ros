@@ -19,6 +19,7 @@
 
 
 ros 'indigo' do
+  config 'ros-core'
   action :install
 end
 

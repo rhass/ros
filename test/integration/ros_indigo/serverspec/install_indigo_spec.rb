@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'install_indigo' do
   it 'installs ROS indigo' do
-    expect(package('ros-indigo-ros-base')).to be_installed
+    expect(package('ros-indigo-ros-core')).to be_installed
   end
 
   it 'adds a symlink to the ros indigo setup.sh in /etc/profiles.d' do

@@ -33,7 +33,7 @@ module Ros
     actions(:install, :upgrade, :remove)
 
     attribute(:release, kind_of: String, name_attribute: true)
-    attribute(:config, kind_of: String, :equal_to => ['desktop-full', 'desktop', 'ros-base'], default: 'ros-base')
+    attribute(:config, kind_of: String, :equal_to => ['desktop-full', 'desktop', 'ros-base', 'ros-core'], default: 'ros-base')
     attribute(:apt_uri, kind_of: String, default: 'http://packages.ros.org/ros/ubuntu')
     attribute(:apt_components, kind_of: Array, default: ['main'])
     attribute(:apt_key, kind_of: String, default: 'https://raw.githubusercontent.com/ros/rosdistro/master/ros.key')
