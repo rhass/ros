@@ -21,3 +21,7 @@ catkin_package 'roslint' do
   source_uri 'https://github.com/ros/roslint'
   revision 'master'
 end
+
+catkin_package 'ros_comm' do
+  source_uri 'https://github.com/ros/ros_comm.git'
+end

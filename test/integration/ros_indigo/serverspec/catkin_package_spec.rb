@@ -5,11 +5,12 @@ describe 'catkin_package resource' do
     expect(file('/opt/catkin_ws/src/roslint/.git')).to be_directory
   end
 
-  subject(:catkin_find) { command('. /opt/ros/indigo/setup.sh ; catkin_find xv11_laser_driver') }
+  subject(:installed_package) { command('/opt/catkin_ws/devel/env.sh rospack list') }
   it 'builds the catkin package with catkin_make' do
     expect(file('/opt/catkin_ws/build')).to be_directory
-    expect(file('/opt/catkin_ws/build/roslint')).to be_directory
-    expect(catkin_find.exit_status).to eq(0)
+    expect(file('/opt/catkin_ws/build/ros_comm')).to be_directory
+    expect(installed_package.stdout).to match(/^rospy \/opt\/catkin_ws\/src\/ros_comm\/clients\/rospy$/)
   end
+
 end
 
