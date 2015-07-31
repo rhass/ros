@@ -8,6 +8,9 @@ env:
   - secure: M8eS3RqRRGCRudyoG2nMfVgKkqHP6bSrEbyPccpu3xFLvQnxLgPmiToSxYHPGvN8mtH7eKwQf/nfKneHQLU0AXWGZWnXb7RUZ/0+zo2Oj4XlCS+CIsWLN92kVCnGwcJJFTni5kaM72XJ1c+o69zfLjHefXD0yb9gl1Rb7JDXXKc=
   - DIGITALOCEAN_SSH_KEY_IDS="689870"
   - KITCHEN_LOCAL_YAML=.kitchen.travis.yml
+notifications:
+  slack:
+    secure: l+MM6GbdABbA3IfV2mRPBufUUG8zmvPkjx2zlIY7tvD7xrOre3vGmucPevQPv/yBj2tgICPWMNDqxLZNRZqC3zG8hJu5NocEqaG4lacdjHlOQm/17nxmMgm/7n3r9ymrS2rCBVcEw7ytUOZxxD6vLlFENN7bNBVpFIfrj4JX4qc=
 before_install:
 - openssl aes-256-cbc -K $encrypted_a17b55e0d87d_key -iv $encrypted_a17b55e0d87d_iv
   -in test/integration/travis_ssh_key.enc -out ~/.ssh/id_rsa -d
