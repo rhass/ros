@@ -14,7 +14,3 @@ suites:
       - recipe[ros_test::install_indigo]
       - recipe[ros_test::catkin_package]
     attributes:
-  - name: ros_indigo_no_sysprofile
-    run_list:
-      - recipe[ros_test::install_indigo_no_sysprofile]
-    attributes:
