@@ -6,4 +6,3 @@ platforms:
   - name: ubuntu-14-04-x64
     driver_config:
       region: sfo1
-      size: 1gb

@@ -22,6 +22,13 @@ catkin_package 'roslint' do
   revision 'master'
 end
 
-catkin_package 'ros_comm' do
-  source_uri 'https://github.com/ros/ros_comm.git'
+# This is a sneaky trick from which we can benefit. The rosserial repository
+# is not a flat repo, and contains multiple serial packages in addition to a
+# "rosserial" metapackage which builds everything. However, there will be times
+# when we really only want to build a single component, and all we need to do
+# to accomplish this is use the specific component name in the resource name,
+# in our case this is "rosserial_arduino."
+catkin_package 'rosserial_arduino' do
+  source_uri 'https://github.com/ros-drivers/rosserial.git'
+  revision 'indigo-devel'
 end

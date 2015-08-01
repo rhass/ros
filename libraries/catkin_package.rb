@@ -85,7 +85,7 @@ module CatkinPackage
           end
 
           execute "cmake-#{new_resource.name}" do
-            command  "#{new_resource.parent.ros_cmd} catkin_make install --directory #{new_resource.parent.workspace}"
+            command  "#{new_resource.parent.ros_cmd} catkin_make install --pkg #{new_resource.name} --directory #{new_resource.parent.workspace}"
             user new_resource.parent.user
             action :nothing
           end

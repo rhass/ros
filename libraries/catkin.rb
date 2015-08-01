@@ -32,7 +32,7 @@ module Catkin
     attribute(:workspace, kind_of: String, name_attribute: true)
     attribute(:workspace_src_dir, kind_of: String, default: lazy { ::File.join(self.workspace, 'src') })
     attribute(:ros_path, kind_of: String, default: lazy { ::File.join('/opt/ros', self.release) })
-    attribute(:ros_cmd, kind_of: String, default: lazy { ::File.exists?(::File.join(self.workspace, 'devel', 'env.sh')) ? ::File.join(self.workspace, 'devel', 'env.sh') : ::File.join(self.ros_path, 'env.sh') })
+    attribute(:ros_cmd, kind_of: String, default: lazy { ::File.exists?(::File.join(self.workspace, 'install', 'env.sh')) ? ::File.join(self.workspace, 'install', 'env.sh') : ::File.join(self.ros_path, 'env.sh') })
   end
 
   class Provider < Chef::Provider
@@ -69,6 +69,13 @@ module Catkin
         cwd new_resource.workspace_src_dir
         user new_resource.user
         creates ::File.join(new_resource.workspace_src_dir, 'CMakeLists.txt')
+      end
+
+      execute 'catkin_init_install' do
+        command "#{new_resource.ros_cmd} catkin_make install"
+        cwd new_resource.workspace_src_dir
+        user new_resource.user
+        creates ::File.join(new_resource.workspace, 'install', 'env.sh')
       end
     end
 
