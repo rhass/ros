@@ -73,7 +73,7 @@ module Catkin
 
       execute 'catkin_init_install' do
         command "#{new_resource.ros_cmd} catkin_make install"
-        cwd new_resource.workspace_src_dir
+        cwd new_resource.workspace
         user new_resource.user
         creates ::File.join(new_resource.workspace, 'install', 'env.sh')
       end
