@@ -1,4 +1,6 @@
-sudo: false
+sudo: required
+services:
+  - docker
 cache: bundler
 language: ruby
 rvm:
@@ -7,7 +9,6 @@ env:
   global:
   - secure: M8eS3RqRRGCRudyoG2nMfVgKkqHP6bSrEbyPccpu3xFLvQnxLgPmiToSxYHPGvN8mtH7eKwQf/nfKneHQLU0AXWGZWnXb7RUZ/0+zo2Oj4XlCS+CIsWLN92kVCnGwcJJFTni5kaM72XJ1c+o69zfLjHefXD0yb9gl1Rb7JDXXKc=
   - DIGITALOCEAN_SSH_KEY_IDS="689870"
-  - KITCHEN_LOCAL_YAML=.kitchen.travis.yml
 notifications:
   slack:
     secure: l+MM6GbdABbA3IfV2mRPBufUUG8zmvPkjx2zlIY7tvD7xrOre3vGmucPevQPv/yBj2tgICPWMNDqxLZNRZqC3zG8hJu5NocEqaG4lacdjHlOQm/17nxmMgm/7n3r9ymrS2rCBVcEw7ytUOZxxD6vLlFENN7bNBVpFIfrj4JX4qc=
