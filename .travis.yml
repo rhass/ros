@@ -1,17 +1,15 @@
 sudo: required
 services:
   - docker
-cache: bundler
 language: ruby
 notifications:
   slack:
     secure: l+MM6GbdABbA3IfV2mRPBufUUG8zmvPkjx2zlIY7tvD7xrOre3vGmucPevQPv/yBj2tgICPWMNDqxLZNRZqC3zG8hJu5NocEqaG4lacdjHlOQm/17nxmMgm/7n3r9ymrS2rCBVcEw7ytUOZxxD6vLlFENN7bNBVpFIfrj4JX4qc=
 before_install:
-- openssl aes-256-cbc -K $encrypted_a17b55e0d87d_key -iv $encrypted_a17b55e0d87d_iv
-  -in test/integration/travis_ssh_key.enc -out ~/.ssh/id_rsa -d
-bundler_args: "--binstubs"
+  - curl -s https://packagecloud.io/install/repositories/chef/stable/script.deb.sh | sudo bash
+  - sudo apt-get install chefdk
+  - /opt/chefdk/bin/chef gem install kitchen-docker-api
+install: echo 'Skipping bundle install in favor of Chef DK...'
 script:
-- "./bin/foodcritic ."
-- "./bin/kitchen test -d never" 
-after_script:
-- rm ~/.ssh/id_rsa
+- /opt/chefdk/bin/chef exec foodcritic .
+- /opt/chefdk/bin/chef exec kitchen test -d never
