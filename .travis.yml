@@ -3,8 +3,6 @@ services:
   - docker
 cache: bundler
 language: ruby
-rvm:
-- 2.1.4
 env:
   global:
   - secure: M8eS3RqRRGCRudyoG2nMfVgKkqHP6bSrEbyPccpu3xFLvQnxLgPmiToSxYHPGvN8mtH7eKwQf/nfKneHQLU0AXWGZWnXb7RUZ/0+zo2Oj4XlCS+CIsWLN92kVCnGwcJJFTni5kaM72XJ1c+o69zfLjHefXD0yb9gl1Rb7JDXXKc=
