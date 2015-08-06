@@ -122,14 +122,6 @@ ros_service 'xv_11_laser_driver' do
 end
 ```
 
-## Sponsors
-Hosting sponsorship is provided by supporters like you. We use DigitalOcean
-and your support by signing up with the following reference code you will get
-$10 in free credit, and the first $25 of your usages are graciously contributed
-to compute time for this project. We appreciate your support!
-
-https://www.digitalocean.com/?refcode=775b6507a7eb
-
 ## License and Authors
 
 Author:: Ryan Hass (<ryan@invalidchecksum.net>)
