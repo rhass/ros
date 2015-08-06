@@ -7,9 +7,9 @@ notifications:
     secure: l+MM6GbdABbA3IfV2mRPBufUUG8zmvPkjx2zlIY7tvD7xrOre3vGmucPevQPv/yBj2tgICPWMNDqxLZNRZqC3zG8hJu5NocEqaG4lacdjHlOQm/17nxmMgm/7n3r9ymrS2rCBVcEw7ytUOZxxD6vLlFENN7bNBVpFIfrj4JX4qc=
 before_install:
   - curl -s https://packagecloud.io/install/repositories/chef/stable/script.deb.sh | sudo bash
+install:
   - sudo apt-get install chefdk
   - /opt/chefdk/bin/chef gem install kitchen-docker-api
-install: echo 'Skipping bundle install in favor of Chef DK...'
 script:
-- /opt/chefdk/bin/chef exec foodcritic .
-- /opt/chefdk/bin/chef exec kitchen test -d never
+  - /opt/chefdk/bin/chef exec foodcritic .
+  - /opt/chefdk/bin/chef exec kitchen test -d never
